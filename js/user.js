@@ -8,45 +8,43 @@ let currentUser;
  */
 
 /** Handle login form submission. If login ok, sets up the user instance */
-
 async function login(evt) {
-  console.debug("login", evt);
-  evt.preventDefault();
+	console.debug("login", evt);
+	evt.preventDefault();
 
-  // grab the username and password
-  const username = $("#login-username").val();
-  const password = $("#login-password").val();
+	// grab the username and password
+	const username = $("#login-username").val();
+	const password = $("#login-password").val();
 
-  // User.login retrieves user info from API and returns User instance
-  // which we'll make the globally-available, logged-in user.
-  currentUser = await User.login(username, password);
+	// User.login retrieves user info from API and returns User instance
+	// which we'll make the globally-available, logged-in user.
+	currentUser = await User.login(username, password);
 
-  $loginForm.trigger("reset");
+	$loginForm.trigger("reset");
 
-  saveUserCredentialsInLocalStorage();
-  updateUIOnUserLogin();
+	saveUserCredentialsInLocalStorage();
+	updateUIOnUserLogin();
 }
 
 $loginForm.on("submit", login);
 
 /** Handle signup form submission. */
-
 async function signup(evt) {
-  console.debug("signup", evt);
-  evt.preventDefault();
+	console.debug("signup", evt);
+	evt.preventDefault();
 
-  const name = $("#signup-name").val();
-  const username = $("#signup-username").val();
-  const password = $("#signup-password").val();
+	const name = $("#signup-name").val();
+	const username = $("#signup-username").val();
+	const password = $("#signup-password").val();
 
-  // User.signup retrieves user info from API and returns User instance
-  // which we'll make the globally-available, logged-in user.
-  currentUser = await User.signup(username, password, name);
+	// User.signup retrieves user info from API and returns User instance
+	// which we'll make the globally-available, logged-in user.
+	currentUser = await User.signup(username, password, name);
 
-  saveUserCredentialsInLocalStorage();
-  updateUIOnUserLogin();
+	saveUserCredentialsInLocalStorage();
+	updateUIOnUserLogin();
 
-  $signupForm.trigger("reset");
+	$signupForm.trigger("reset");
 }
 
 $signupForm.on("submit", signup);
@@ -55,11 +53,10 @@ $signupForm.on("submit", signup);
  *
  * Remove their credentials from localStorage and refresh page
  */
-
 function logout(evt) {
-  console.debug("logout", evt);
-  localStorage.clear();
-  location.reload();
+	console.debug("logout", evt);
+	localStorage.clear();
+	location.reload();
 }
 
 $navLogOut.on("click", logout);
@@ -71,15 +68,14 @@ $navLogOut.on("click", logout);
 /** If there are user credentials in local storage, use those to log in
  * that user. This is meant to be called on page load, just once.
  */
-
 async function checkForRememberedUser() {
-  console.debug("checkForRememberedUser");
-  const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username");
-  if (!token || !username) return false;
+	console.debug("checkForRememberedUser");
+	const token = localStorage.getItem("token");
+	const username = localStorage.getItem("username");
+	if (!token || !username) return false;
 
-  // try to log in with these credentials (will be null if login failed)
-  currentUser = await User.loginViaStoredCredentials(token, username);
+	// try to log in with these credentials (will be null if login failed)
+	currentUser = await User.loginViaStoredCredentials(token, username);
 }
 
 /** Sync current user information to localStorage.
@@ -87,13 +83,12 @@ async function checkForRememberedUser() {
  * We store the username/token in localStorage so when the page is refreshed
  * (or the user revisits the site later), they will still be logged in.
  */
-
 function saveUserCredentialsInLocalStorage() {
-  console.debug("saveUserCredentialsInLocalStorage");
-  if (currentUser) {
-    localStorage.setItem("token", currentUser.loginToken);
-    localStorage.setItem("username", currentUser.username);
-  }
+	console.debug("saveUserCredentialsInLocalStorage");
+	if (currentUser) {
+		localStorage.setItem("token", currentUser.loginToken);
+		localStorage.setItem("username", currentUser.username);
+	}
 }
 
 /******************************************************************************
@@ -106,11 +101,10 @@ function saveUserCredentialsInLocalStorage() {
  * - update nav bar options for logged-in user
  * - generate the user profile part of the page
  */
-
 function updateUIOnUserLogin() {
-  console.debug("updateUIOnUserLogin");
+	console.debug("updateUIOnUserLogin");
 
-  $allStoriesList.show();
+	$allStoriesList.show();
 
-  updateNavOnLogin();
+	updateNavOnLogin();
 }

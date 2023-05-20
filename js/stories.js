@@ -4,12 +4,11 @@
 let storyList;
 
 /** Get and show stories when site first loads. */
-
 async function getAndShowStoriesOnStart() {
-  storyList = await StoryList.getStories();
-  $storiesLoadingMsg.remove();
+	storyList = await StoryList.getStories();
+	$storiesLoadingMsg.remove();
 
-  putStoriesOnPage();
+	putStoriesOnPage();
 }
 
 /**
@@ -18,35 +17,33 @@ async function getAndShowStoriesOnStart() {
  *
  * Returns the markup for the story.
  */
-
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+	// console.debug("generateStoryMarkup", story);
 
-  const hostName = story.getHostName();
-  return $(`
-      <li id="${story.storyId}">
-        <a href="${story.url}" target="a_blank" class="story-link">
-          ${story.title}
-        </a>
-        <small class="story-hostname">(${hostName})</small>
-        <small class="story-author">by ${story.author}</small>
-        <small class="story-user">posted by ${story.username}</small>
-      </li>
+	const hostName = story.getHostName();
+	return $(`
+		<li id="${story.storyId}">
+			<a href="${story.url}" target="a_blank" class="story-link">
+				${story.title}
+			</a>
+			<small class="story-hostname">(${hostName})</small>
+			<small class="story-author">by ${story.author}</small>
+			<small class="story-user">posted by ${story.username}</small>
+		</li>
     `);
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
-
 function putStoriesOnPage() {
-  console.debug("putStoriesOnPage");
+	console.debug("putStoriesOnPage");
 
-  $allStoriesList.empty();
+	$allStoriesList.empty();
 
-  // loop through all of our stories and generate HTML for them
-  for (let story of storyList.stories) {
-    const $story = generateStoryMarkup(story);
-    $allStoriesList.append($story);
-  }
+	// loop through all of our stories and generate HTML for them
+	for (let story of storyList.stories) {
+		const $story = generateStoryMarkup(story);
+		$allStoriesList.append($story);
+	}
 
-  $allStoriesList.show();
+	$allStoriesList.show();
 }
