@@ -49,7 +49,7 @@ class StoryList {
 		// Note presence of `static` keyword: this indicates that getStories is
 		//  **not** an instance method. Rather, it is a method that is called on the
 		//  class directly. Why doesn't it make sense for getStories to be an
-		//  instance method? because getStories builds the the class, and we only want one?
+		//  instance method? because getStories builds the class stories value, and we only want one stories we can call from in ram and not call the api repeadetly?
 
 		// query the /stories endpoint (no auth required)
 		const response = await axios({
