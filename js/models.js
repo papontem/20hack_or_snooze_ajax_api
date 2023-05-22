@@ -49,7 +49,7 @@ class StoryList {
 		// Note presence of `static` keyword: this indicates that getStories is
 		//  **not** an instance method. Rather, it is a method that is called on the
 		//  class directly. Why doesn't it make sense for getStories to be an
-		//  instance method? because getStories builds the class stories value, and we only want one stories we can call from in ram and not call the api repeadetly?
+		//  instance method? because getStories builds the class's stories value, and we only want one stories we can call from in-ram and not call the api repeadetly?
 
 		// query the /stories endpoint (no auth required)
 		const response = await axios({
@@ -71,8 +71,34 @@ class StoryList {
 	 * Returns the new Story instance
 	 */
 
-	async addStory(/* user, newStory */) {
+	async addStory(currentUser, inputStory) {
 		// UNIMPLEMENTED: complete this function!
+		//PAM: doing....
+		console.log("currentUser:", currentUser); //PAM: currently undefined login first
+		//add to api, token is requiered
+		// struture params for axios post request
+		// Token Required. The fields title, author, and url are required.
+		let requestBody = {
+			token: currentUser.loginToken,
+			story: inputStory,
+		};
+		console.log("body for post request:", requestBody);
+		// make axios api post request
+		const response = await axios({
+			url: `${BASE_URL}/stories`,
+			method: "POST",
+			data: requestBody,
+		});
+		console.log("Response: ", response);
+		console.log("Response Data: ", response.data);
+		// make story instance localy, must have  {title, author, url, username, storyId, createdAt}
+		let newStory = response.data;
+		// adds it to story list
+		this.stories.unshift(newStory);
+		//return story instance
+		console.log("newStory :", newStory);
+		console.log("story list =", storyList);
+		return newStory;
 	}
 }
 
