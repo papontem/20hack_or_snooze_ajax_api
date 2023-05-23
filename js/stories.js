@@ -54,7 +54,7 @@ function putStoriesOnPage() {
  * Pick a good name for it. pam: 🤔
  * This function should get the data from the form, call the .addStory method you wrote, and then put that new story on the page.
  */
-function whenUsersSubmitTheNewStorySubmitForm(event) {
+async function whenUsersSubmitTheNewStorySubmitForm(event) {
 	event.preventDefault();
 	console.log("whenUsersSubmitTheNewStorySubmitForm", event);
 
@@ -62,17 +62,18 @@ function whenUsersSubmitTheNewStorySubmitForm(event) {
 	const myInputValues = [
 		$("#submit-story-title").val(),
 		$("#submit-story-author").val(),
-		$("#submit-story-source").val(),
+		$("#submit-story-url").val(),
 	];
 	// pam:grab the title author and source
 	// pam: D-D-D-D-DESTRUCTION!!!!
-	const [title, author, source] = [...myInputValues];
-	console.log(`Title: ${title}\nAuthor: ${author}\nSource: ${source}`);
+	const [title, author, url] = [...myInputValues];
+	console.log(`Title: ${title}\nAuthor: ${author}\nSource: ${url}`);
 	// pam:call the .addStory method
-	const newStoryPayload = { title, author, source };
-	const newStory = storyList.addStory(currentUser, newStoryPayload); // create story in making post request to api, return a story instance thats already been added to our story list
+	const newStoryPayload = { title, author, url };
+	console.log("payload:", newStoryPayload);
+	const newStory = await storyList.addStory(currentUser, newStoryPayload); // create story in making post request to api, return a story instance thats already been added to our story list
 	// pam: put that new story on the page
-	// const newStoryMarkUp = generateStoryMarkup(newStory)
+	putStoriesOnPage();
 }
 
 $submitStoryForm.on("submit", whenUsersSubmitTheNewStorySubmitForm);
