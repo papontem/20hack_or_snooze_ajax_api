@@ -73,17 +73,16 @@ class StoryList {
 
 	async addStory(currentUser, inputStory) {
 		// UNIMPLEMENTED: complete this function!
-		//PAM: doing....
+		//PAM: doing....done
 		// console.log("currentUser:", currentUser);
-		//add to api, token is requiered
-		// struture params for axios post request
-		// Token Required. The fields title, author, and url are required.
+		// add to api, struture params for axios post request
+		// Token and the fields title, author, and url are required> last three are inside story object
 		let requestBody = {
 			token: currentUser.loginToken,
 			story: inputStory,
 		};
 		// console.log("body for post request:", requestBody);
-		// make axios api post request
+		// pam: make axios api post request
 		const response = await axios({
 			url: `${BASE_URL}/stories`,
 			method: "POST",
@@ -91,9 +90,9 @@ class StoryList {
 		});
 		// console.log("Response: ", response);
 		// console.log("Response Data: ", response.data);
-		// make story instance localy, must have  {title, author, url, username, storyId, createdAt}
+		// pam: make story instance localy, must have  {title, author, url, username, storyId, createdAt}
 		let newStory = new Story(response.data.story);
-		// adds it to story list
+		// pam: adds it to story list
 		this.stories.unshift(newStory);
 		//return story instance
 		// console.log("newStory :", newStory);

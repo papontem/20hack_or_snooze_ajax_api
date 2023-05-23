@@ -32,10 +32,10 @@ function updateNavOnLogin() {
 	$navUserProfile.text(`${currentUser.username}`).show();
 }
 
-function submitStoryClick(event) {
-	console.log("submitStoryClick", event);
+function navSubmitStoryClick(event) {
+	console.log("navSubmitStoryClick", event);
 	hidePageComponents();
 	$submitStoryForm.show();
 }
 
-$navSubmitStoryForm.on("click", submitStoryClick);
+$navSubmitStoryForm.on("click", navSubmitStoryClick);

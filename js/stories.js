@@ -18,7 +18,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 function generateStoryMarkup(story) {
-	// console.debug("generateStoryMarkup", story);
+	console.debug("generateStoryMarkup", story);
 
 	const hostName = story.getHostName();
 	return $(`
@@ -47,3 +47,32 @@ function putStoriesOnPage() {
 
 	$allStoriesList.show();
 }
+
+/**
+ * Write a function in stories.js that is called when users submit the form.
+ * PAM: doing....
+ * Pick a good name for it. pam: 🤔
+ * This function should get the data from the form, call the .addStory method you wrote, and then put that new story on the page.
+ */
+function whenUsersSubmitTheNewStorySubmitForm(event) {
+	event.preventDefault();
+	console.log("whenUsersSubmitTheNewStorySubmitForm", event);
+
+	// pam:get the data from the submit form
+	const myInputValues = [
+		$("#submit-story-title").val(),
+		$("#submit-story-author").val(),
+		$("#submit-story-source").val(),
+	];
+	// pam:grab the title author and source
+	// pam: D-D-D-D-DESTRUCTION!!!!
+	const [title, author, source] = [...myInputValues];
+	console.log(`Title: ${title}\nAuthor: ${author}\nSource: ${source}`);
+	// pam:call the .addStory method
+	const newStoryPayload = { title, author, source };
+	const newStory = storyList.addStory(currentUser, newStoryPayload); // create story in making post request to api, return a story instance thats already been added to our story list
+	// pam: put that new story on the page
+	// const newStoryMarkUp = generateStoryMarkup(newStory)
+}
+
+$submitStoryForm.on("submit", whenUsersSubmitTheNewStorySubmitForm);
