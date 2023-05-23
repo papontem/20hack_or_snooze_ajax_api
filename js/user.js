@@ -91,6 +91,14 @@ function saveUserCredentialsInLocalStorage() {
 	}
 }
 
+// Part 3: Favorite stories
+// In this step, you’ll add a feature marking/unmarking a story as a favorite.
+// As before, it’s best to write the data-logic and API-call part first, and do the UI afterwards.
+// Subpart 3A: Data/API Changes
+// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes.
+// Allow logged in users to see a separate list of favorited stories.
+// The methods for adding and removing favorite status on a story should be defined in the User class.
+
 /******************************************************************************
  * General UI stuff about users
  */
