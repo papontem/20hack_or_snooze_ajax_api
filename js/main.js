@@ -8,18 +8,25 @@ const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
 
 const $loginForm = $("#login-form");
+const $submitStoryForm = $("#submit-story-form"); //PAM: ADDED submit story form
 const $signupForm = $("#signup-form");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
+const $navSubmitStoryForm = $("div.navbar-brand #SubmitStoryNav"); //PAM: added button to navigate to submit story form
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
  * calling this, individual components can re-show just what they want.
  */
 function hidePageComponents() {
-	const components = [$allStoriesList, $loginForm, $signupForm];
+	const components = [
+		$allStoriesList,
+		$loginForm,
+		$signupForm,
+		$submitStoryForm,
+	]; //PAM: also hide submit form
 	components.forEach((c) => c.hide());
 }
 

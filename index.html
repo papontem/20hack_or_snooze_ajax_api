@@ -33,6 +33,9 @@
 		<nav>
 			<div class="navbar-brand">
 				<a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
+				|
+				<a class="nav-link" href="#" id="SubmitStoryNav">submit</a>
+				|
 			</div>
 			<div class="nav-right">
 				<a class="nav-link" href="#" id="nav-login">login/signup</a>
@@ -49,7 +52,30 @@
 			<!-- List of all stories -->
 			<ol id="all-stories-list" class="stories-list"></ol>
 		</section>
-
+		<!-- PAM: Submit Story Form Container-->
+		<section class="submit-story-form-container container">
+			<!-- PAM: Submit Story Form -->
+			<form
+				action="#"
+				id="submit-story-form"
+				class="story-form hidden"
+				method="post">
+				<h4>Submit Story</h4>
+				<div class="submit-story-input">
+					<label for="submit-story-title">title</label>
+					<input id="submit-story-title" autocomplete="new-story-title" />
+				</div>
+				<div class="submit-story-input">
+					<label for="submit-story-author">author</label>
+					<input id="submit-story-author" autocomplete="new-story-author" />
+				</div>
+				<div class="submit-story-input">
+					<label for="submit-story-source">source</label>
+					<input id="submit-story-source" autocomplete="new-story-source" />
+				</div>
+				<button type="submit">submit story</button>
+			</form>
+		</section>
 		<!-- Login and signup forms -->
 		<section class="account-forms-container container">
 			<!-- Login form -->
