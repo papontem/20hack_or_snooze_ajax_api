@@ -32,10 +32,23 @@ function updateNavOnLogin() {
 	$navUserProfile.text(`${currentUser.username}`).show();
 }
 
+// part 2
 function navSubmitStoryClick(event) {
 	console.log("navSubmitStoryClick", event);
+	putStoriesOnPage();
 	// hidePageComponents();
 	$submitStoryForm.show();
 }
 
 $navSubmitStoryForm.on("click", navSubmitStoryClick);
+
+// part 3B UI elements interactivity
+function navFavoriteStoriesClick(event) {
+	console.log("navFavoritesClick", event);
+	hidePageComponents();
+	// show favorite storieslist
+	$favoriteStoriesList.show();
+	// putStoriesOnPage();
+}
+
+$navFavorites.on("click", navFavoriteStoriesClick);

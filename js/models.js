@@ -72,8 +72,7 @@ class StoryList {
 	 */
 
 	async addStory(currentUser, inputStory) {
-		// UNIMPLEMENTED: complete this function!
-		//PAM: doing....done
+		// UNIMPLEMENTED: complete this function! PAM: doing....done
 		// console.log("currentUser:", currentUser);
 		// add to api, struture params for axios post request
 		// Token and the fields title, author, and url are required> last three are inside story object
@@ -211,4 +210,56 @@ class User {
 			return null;
 		}
 	}
+
+	/******************************************************************************
+	 * feature marking/unmarking a story as a favorite of the current user
+	 * The methods for adding and removing favorite status on a story should be defined in the User class.
+	 */
+	// Part 3: Favorite stories
+	// Subpart 3A: Data/API Changes: write the data-logic and API-call part first,
+	// understand how to favorite a story using api PAM: DONE
+	// api request add favorite requiers to be a post request with token in body and the url to post to is the base url plus /users/username/favorites/storyId
+	// build logic to save and unsave favorites to users favorites list pam: Doing....
+	static async markStoryFavorite(storyId) {
+		let username = currentUser.username;
+		let token = currentUser.loginToken;
+		console.log("username:", username);
+		console.log("storyId:", storyId);
+		// console.log(
+		// 	`url for request: ${BASE_URL}/users/${username}/favorites/${storyId}`
+		// );
+		const response = await axios({
+			url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+			method: "POST",
+			params: { token },
+		});
+		console.log("Response: ", response);
+		console.log("Response Data: ", response.data);
+		// Now ADD story to users favorites list
+		return response.data;
+	}
+	static async markStoryNOTFavorite(storyId) {
+		let username = currentUser.username;
+		let token = currentUser.loginToken;
+		console.log("username:", username);
+		console.log("storyId:", storyId);
+		// console.log(
+		// 	`url for request: ${BASE_URL}/users/${username}/favorites/${storyId}`
+		// );
+		const response = await axios({
+			url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+			method: "DELETE",
+			params: { token },
+		});
+		console.log("Response: ", response);
+		console.log("Response Data: ", response.data);
+		// now REMOVE story from users favorite list
+		return response.data;
+	}
+
+	// Subpart 3B: the UI
+	// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes.
+	// add button/ check to favorite story with event listener to add mark story a favorite
+	// Allow logged in users to see a separate list of favorited stories.
+	// add favorites nav tab
 }
