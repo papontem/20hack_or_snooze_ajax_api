@@ -221,7 +221,7 @@ class User {
 	// understand how to favorite a story using api PAM: DONE
 	// api request add favorite requiers to be a post request with token in body and the url to post to is the base url plus /users/username/favorites/storyId
 	// build logic to save and unsave favorites to users favorites list pam: Doing....
-	async markStoryFavorite(storyId) {
+	async markStoryAsAFavoriteOfUser(storyId) {
 		let username = currentUser.username;
 		let token = currentUser.loginToken;
 		console.log("username:", username);
@@ -241,13 +241,13 @@ class User {
 		currentUser.favorites = []; // PAM: the add favorite api call returns a favorites array aswell so we can reassing the value of current useres favorites array localy with the one thats online
 		// turn favorites stories into our local stories instance type
 		for (let story of response.data.user.favorites) {
-			console.log(story);
+			// console.log(story);
 			const newLocalStory = new Story(story);
 			currentUser.favorites.push(newLocalStory);
 		}
 		return response.data;
 	}
-	async markStoryNOTFavorite(storyId) {
+	async markStoryNOTAFavoriteOfUser(storyId) {
 		let username = currentUser.username;
 		let token = currentUser.loginToken;
 		console.log("username:", username);
@@ -277,6 +277,7 @@ class User {
 	// Subpart 3B: the UI
 	// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes.
 	// add button/ check to favorite story with event listener to add / mark story a favorite
+	// using a chackbox and checking if its checked or not. 'input[type="checkbox"]'
 	// Allow logged in users to see a separate list of favorited stories.
 	// add favorites nav tab
 }

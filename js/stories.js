@@ -24,6 +24,7 @@ function generateStoryMarkup(story) {
 
 	return $(`
 		<li id="${story.storyId}">
+			<input type="checkbox" id="favoriteStoryCheckbox">
 			<a href="${story.url}" target="a_blank" class="story-link">
 				${story.title}
 			</a>
@@ -46,10 +47,11 @@ function putStoriesOnPage() {
 		$allStoriesList.append($story);
 	}
 
+	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
 	$allStoriesList.show();
 }
 
-/** Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
+/** PAM: Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
 function putFavoritesOnPage() {
 	console.debug("putFavoritesOnPage");
 
@@ -60,9 +62,34 @@ function putFavoritesOnPage() {
 		const $story = generateStoryMarkup(story);
 		$favoriteStoriesList.append($story);
 	}
-
+	// when we create the html of the entire favorite list, i want to have the checkboxes prechecked
+	for (let checkbox of $("input#favoriteStoryCheckbox")) {
+		checkbox.checked = true;
+	}
+	// add the even listener for toggling favorite on a story
+	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
+	// render the favorites story list
 	$favoriteStoriesList.show();
 }
+/** PAM: PART 3
+ * function to handle click event on add/remove to favorites checkbox
+ */
+function toggleFavoriteCheck(event) {
+	//console.log("this:", this)
+	console.log("toogleFavotireCheck");
+	console.log("this.checked:", this.checked);
+	const story_id = $(this).parent().attr("id");
+	if (this.checked) {
+		console.log("Favorites: ADDING", story_id);
+		// add story to favorites
+		currentUser.markStoryAsAFavoriteOfUser(story_id);
+	} else {
+		console.log("Favorites: REMOVING", story_id);
+		// remove story from favorites
+		currentUser.markStoryNOTAFavoriteOfUser(story_id);
+	}
+}
+
 /**
  * Write a function in stories.js that is called when users submit the form.
  * PAM: doing....
