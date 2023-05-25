@@ -220,7 +220,7 @@ class User {
 	// understand how to favorite a story using api PAM: DONE
 	// api request add favorite requiers to be a post request with token in body and the url to post to is the base url plus /users/username/favorites/storyId
 	// build logic to save and unsave favorites to users favorites list pam: Doing....
-	static async markStoryFavorite(storyId) {
+	async markStoryFavorite(storyId) {
 		let username = currentUser.username;
 		let token = currentUser.loginToken;
 		console.log("username:", username);
@@ -236,9 +236,10 @@ class User {
 		console.log("Response: ", response);
 		console.log("Response Data: ", response.data);
 		// Now ADD story to users favorites list
+		currentUser.favorites = response.data.user.favorites; // PAM: the add favorite api call returns a foavites array aswell so we can reassing the value of current useres favorites array localy with the one thats online
 		return response.data;
 	}
-	static async markStoryNOTFavorite(storyId) {
+	async markStoryNOTFavorite(storyId) {
 		let username = currentUser.username;
 		let token = currentUser.loginToken;
 		console.log("username:", username);
@@ -254,6 +255,7 @@ class User {
 		console.log("Response: ", response);
 		console.log("Response Data: ", response.data);
 		// now REMOVE story from users favorite list
+		currentUser.favorites = response.data.user.favorites;
 		return response.data;
 	}
 
