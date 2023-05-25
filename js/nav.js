@@ -47,8 +47,8 @@ function navFavoriteStoriesClick(event) {
 	console.log("navFavoritesClick", event);
 	hidePageComponents();
 	// show favorite storieslist
-	$favoriteStoriesList.show();
-	// putStoriesOnPage();
+	// $favoriteStoriesList.show();
+	putFavoritesOnPage();
 }
 
 $navFavorites.on("click", navFavoriteStoriesClick);

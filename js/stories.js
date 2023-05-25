@@ -21,6 +21,7 @@ function generateStoryMarkup(story) {
 	// console.debug("generateStoryMarkup", story);
 
 	const hostName = story.getHostName();
+
 	return $(`
 		<li id="${story.storyId}">
 			<a href="${story.url}" target="a_blank" class="story-link">
@@ -48,6 +49,20 @@ function putStoriesOnPage() {
 	$allStoriesList.show();
 }
 
+/** Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
+function putFavoritesOnPage() {
+	console.debug("putFavoritesOnPage");
+
+	$favoriteStoriesList.empty();
+
+	// loop through all of our favorite stories and generate HTML for them
+	for (let story of currentUser.favorites) {
+		const $story = generateStoryMarkup(story);
+		$favoriteStoriesList.append($story);
+	}
+
+	$favoriteStoriesList.show();
+}
 /**
  * Write a function in stories.js that is called when users submit the form.
  * PAM: doing....

@@ -24,6 +24,7 @@ class Story {
 
 	getHostName() {
 		// UNIMPLEMENTED: complete this function!
+
 		return "hostname.com";
 	}
 }
@@ -236,7 +237,14 @@ class User {
 		console.log("Response: ", response);
 		console.log("Response Data: ", response.data);
 		// Now ADD story to users favorites list
-		currentUser.favorites = response.data.user.favorites; // PAM: the add favorite api call returns a foavites array aswell so we can reassing the value of current useres favorites array localy with the one thats online
+		// update user favorites list
+		currentUser.favorites = []; // PAM: the add favorite api call returns a favorites array aswell so we can reassing the value of current useres favorites array localy with the one thats online
+		// turn favorites stories into our local stories instance type
+		for (let story of response.data.user.favorites) {
+			console.log(story);
+			const newLocalStory = new Story(story);
+			currentUser.favorites.push(newLocalStory);
+		}
 		return response.data;
 	}
 	async markStoryNOTFavorite(storyId) {
@@ -255,13 +263,20 @@ class User {
 		console.log("Response: ", response);
 		console.log("Response Data: ", response.data);
 		// now REMOVE story from users favorite list
-		currentUser.favorites = response.data.user.favorites;
+		// update user favorites list
+		currentUser.favorites = []; // PAM: the add favorite api call returns a favorites array aswell so we can reassing the value of current useres favorites array localy with the one thats online
+		// turn favorites stories into our local stories instance type
+		for (let story of response.data.user.favorites) {
+			console.log(story);
+			const newLocalStory = new Story(story);
+			currentUser.favorites.push(newLocalStory);
+		}
 		return response.data;
 	}
 
 	// Subpart 3B: the UI
 	// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes.
-	// add button/ check to favorite story with event listener to add mark story a favorite
+	// add button/ check to favorite story with event listener to add / mark story a favorite
 	// Allow logged in users to see a separate list of favorited stories.
 	// add favorites nav tab
 }
