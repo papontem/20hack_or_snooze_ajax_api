@@ -46,8 +46,6 @@ $navSubmitStoryForm.on("click", navSubmitStoryClick);
 function navFavoriteStoriesClick(event) {
 	console.log("navFavoritesClick", event);
 	hidePageComponents();
-	// show favorite storieslist
-	// $favoriteStoriesList.show();
 	putFavoritesOnPage();
 }
 

@@ -106,18 +106,18 @@ class StoryList {
 	}
 
 	/** PAM: doing
-	 * Part 4: Removing Stories
+	 * Part 4: Removing Stories.
 	 * Allow logged in users to remove a story.
 	 * Once a story has been deleted, remove it from the DOM and let the API know its been deleted.
-	 * allow user to delete only their stories
-	 * add a my stories tab
-	 * add button for user to delete the story when looking at stories in my stories tab
+	 * - allow user to delete only their stories.
+	 * - add a my stories tab. done
+	 * - add button for user to delete the story when looking at stories in my stories tab. done
 	 *
 	 * @param {*} currentUser
 	 * @param {*} storyDeleteId
 	 */
 
-	async removeStory(currentUser, storyDeleteId) {
+	async removeAPIStory(currentUser, storyDeleteId) {
 		console.log("removing story");
 		let requestBody = {
 			token: currentUser.loginToken,
@@ -129,6 +129,7 @@ class StoryList {
 		});
 		console.log("Response: ", response);
 		console.log("Response Data: ", response.data);
+		return response.data;
 	}
 }
 

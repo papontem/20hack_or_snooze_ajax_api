@@ -21,7 +21,7 @@ function generateStoryMarkup(story) {
 	// console.debug("generateStoryMarkup", story);
 
 	const hostName = story.getHostName();
-
+	// PAM3: added favorite checkbox to story html markup
 	return $(`
 		<li id="${story.storyId}">
 			<input type="checkbox" id="favoriteStoryCheckbox">
@@ -31,6 +31,25 @@ function generateStoryMarkup(story) {
 			<small class="story-hostname">(${hostName})</small>
 			<small class="story-author">by ${story.author}</small>
 			<small class="story-user">posted by ${story.username}</small>
+		</li>
+    `);
+}
+
+function generateUserOwnStoryMarkup(story) {
+	// console.debug("generateUserOwnStoryMarkup", story);
+
+	const hostName = story.getHostName();
+	// PAM3: added favorite checkbox to story html markup
+	return $(`
+		<li id="${story.storyId}">
+			<button id="deleteButton"> - Delete! - </button>
+			<input type="checkbox" id="favoriteStoryCheckbox">
+			<a href="${story.url}" target="a_blank" class="story-link">
+				${story.title}
+			</a>
+			<small class="story-hostname">(${hostName})</small>
+			<small class="story-author">by ${story.author}</small>
+			<small class="story-user">posted by me (${story.username})</small>
 		</li>
     `);
 }
@@ -51,66 +70,7 @@ function putStoriesOnPage() {
 	$allStoriesList.show();
 }
 
-/** PAM3: Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
-function putFavoritesOnPage() {
-	console.debug("putFavoritesOnPage");
-
-	$favoriteStoriesList.empty();
-
-	// loop through all of our favorite stories and generate HTML for them
-	for (let story of currentUser.favorites) {
-		const $story = generateStoryMarkup(story);
-		$favoriteStoriesList.append($story);
-	}
-	// when we create the html of the entire favorite list, i want to have the checkboxes prechecked
-	for (let checkbox of $("input#favoriteStoryCheckbox")) {
-		checkbox.checked = true;
-	}
-	// add the event listener for toggling favorite on a story
-	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
-	// render the favorites story list
-	$favoriteStoriesList.show();
-}
-/** PAM: PART 4 getlistof users own submitedstories, generatetheir html and puts them on the page
- *
- */
-function putUsersOwnStoriesOnPage() {
-	console.debug("putUsersOwnStoriesOnPage");
-
-	$userStoriesList.empty();
-
-	// loop through all of currenusers own stories and generate HTML for them
-	for (let story of currentUser.ownStories) {
-		const $story = generateStoryMarkup(story);
-		$userStoriesList.append($story);
-	}
-
-	// add the event listener for toggling favorite on a story
-	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
-	// render the favorites story list
-	$userStoriesList.show();
-}
-
-/** PAM: PART 3
- * function to handle click event on add/remove to favorites checkbox
- */
-function toggleFavoriteCheck(event) {
-	//console.log("this:", this)
-	console.log("toogleFavotireCheck");
-	console.log("this.checked:", this.checked);
-	const story_id = $(this).parent().attr("id");
-	if (this.checked) {
-		console.log("Favorites: ADDING", story_id);
-		// add story to favorites
-		currentUser.markStoryAsAFavoriteOfUser(story_id);
-	} else {
-		console.log("Favorites: REMOVING", story_id);
-		// remove story from favorites
-		currentUser.markStoryNOTAFavoriteOfUser(story_id);
-	}
-}
-
-/**
+/** Part2
  * Write a function in stories.js that is called when users submit the form.
  * PAM: doing....
  * Pick a good name for it. pam: 🤔
@@ -141,3 +101,70 @@ async function whenUsersSubmitTheNewStorySubmitForm(event) {
 }
 
 $submitStoryForm.on("submit", whenUsersSubmitTheNewStorySubmitForm);
+
+/** PAM3: Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
+function putFavoritesOnPage() {
+	console.debug("putFavoritesOnPage");
+
+	$favoriteStoriesList.empty();
+
+	// loop through all of our favorite stories and generate HTML for them
+	for (let story of currentUser.favorites) {
+		const $story = generateStoryMarkup(story);
+		$favoriteStoriesList.append($story);
+	}
+	// when we create the html of the entire favorite list, i want to have the checkboxes prechecked
+	for (let checkbox of $("input#favoriteStoryCheckbox")) {
+		checkbox.checked = true;
+	}
+	// add the event listener for toggling favorite on a story
+	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
+	// render the favorites story list
+	$favoriteStoriesList.show();
+}
+
+/** PAM: PART 3
+ * function to handle click event on add/remove to favorites checkbox
+ */
+function toggleFavoriteCheck(event) {
+	//console.log("this:", this)
+	console.log("toogleFavotireCheck");
+	console.log("this.checked:", this.checked);
+	const story_id = $(this).parent().attr("id");
+	if (this.checked) {
+		console.log("Favorites: ADDING", story_id);
+		// add story to favorites
+		currentUser.markStoryAsAFavoriteOfUser(story_id);
+	} else {
+		console.log("Favorites: REMOVING", story_id);
+		// remove story from favorites
+		currentUser.markStoryNOTAFavoriteOfUser(story_id);
+	}
+}
+
+/** PAM: PART 4 getlistof users own submited stories, generatetheir html and puts them on the page
+ *
+ */
+function putUsersOwnStoriesOnPage() {
+	console.debug("putUsersOwnStoriesOnPage");
+
+	$userStoriesList.empty();
+
+	// loop through all of currenusers own stories and generate HTML for them
+	for (let story of currentUser.ownStories) {
+		const $story = generateUserOwnStoryMarkup(story); // PAM4: edited a fork of the provided generateStoriesMarkup to have a delete button
+		$userStoriesList.append($story);
+	}
+
+	// add the event listener for toggling favorite on a story
+	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
+	//add the event listener for the delete button that on the story html element
+	$("li button#deleteButton").on("click", removeStory);
+	// render the favorites story list
+	$userStoriesList.show();
+}
+
+function removeStory(event) {
+	console.log("removeStory, going kapoof", event);
+	console.log("this", this);
+}
