@@ -51,7 +51,7 @@ function putStoriesOnPage() {
 	$allStoriesList.show();
 }
 
-/** PAM: Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
+/** PAM3: Gets list of favorite stories from currentUser, generates their HTML, and puts on favorites page. */
 function putFavoritesOnPage() {
 	console.debug("putFavoritesOnPage");
 
@@ -66,11 +66,31 @@ function putFavoritesOnPage() {
 	for (let checkbox of $("input#favoriteStoryCheckbox")) {
 		checkbox.checked = true;
 	}
-	// add the even listener for toggling favorite on a story
+	// add the event listener for toggling favorite on a story
 	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
 	// render the favorites story list
 	$favoriteStoriesList.show();
 }
+/** PAM: PART 4 getlistof users own submitedstories, generatetheir html and puts them on the page
+ *
+ */
+function putUsersOwnStoriesOnPage() {
+	console.debug("putUsersOwnStoriesOnPage");
+
+	$userStoriesList.empty();
+
+	// loop through all of currenusers own stories and generate HTML for them
+	for (let story of currentUser.ownStories) {
+		const $story = generateStoryMarkup(story);
+		$userStoriesList.append($story);
+	}
+
+	// add the event listener for toggling favorite on a story
+	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
+	// render the favorites story list
+	$userStoriesList.show();
+}
+
 /** PAM: PART 3
  * function to handle click event on add/remove to favorites checkbox
  */
@@ -116,6 +136,8 @@ async function whenUsersSubmitTheNewStorySubmitForm(event) {
 	const newStory = await storyList.addStory(currentUser, newStoryPayload); // create story in making post request to api, return a story instance thats already been added to our story list
 	// pam: put that new story on the page
 	putStoriesOnPage();
+	// PAM: part 4, comming back here cus i forgot to add the submitted stories to the users own stories array xD
+	currentUser.ownStories.push(newStory);
 }
 
 $submitStoryForm.on("submit", whenUsersSubmitTheNewStorySubmitForm);

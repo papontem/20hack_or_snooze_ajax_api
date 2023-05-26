@@ -7,6 +7,7 @@ const $body = $("body");
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
 const $favoriteStoriesList = $("#favorite-stories-list");
+const $userStoriesList = $("#user-stories-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -17,6 +18,7 @@ const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $navSubmitStoryForm = $("div.navbar-brand #SubmitStoryNav"); // PAM: added button to navigate to submit story form
 const $navFavorites = $("div.navbar-brand #nav-favorites"); // PAM: added button to to navigate to favorites list
+const $navUserStories = $("div.navbar-brand #nav-UserStories"); // PAM: added button to navitage to users submitted stories
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -28,6 +30,8 @@ function hidePageComponents() {
 		$loginForm,
 		$signupForm,
 		$submitStoryForm,
+		$favoriteStoriesList,
+		$userStoriesList,
 	]; //PAM: also hide submit form
 	components.forEach((c) => c.hide());
 }

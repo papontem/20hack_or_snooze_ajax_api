@@ -24,8 +24,13 @@ class Story {
 
 	getHostName() {
 		// UNIMPLEMENTED: complete this function!
-
-		return "hostname.com";
+		//PAM: DONE
+		// console.log("this stories url:", this.url);
+		let thisNewUrl = new URL(this.url);
+		// console.log("The new URL object:", thisNewUrl);
+		let hostname = thisNewUrl.hostname;
+		// console.log("The Hostname:", hostname);
+		return hostname;
 	}
 }
 
@@ -73,7 +78,7 @@ class StoryList {
 	 */
 
 	async addStory(currentUser, inputStory) {
-		// UNIMPLEMENTED: complete this function! PAM: doing....done
+		// UNIMPLEMENTED: complete this function! PAM: done
 		// console.log("currentUser:", currentUser);
 		// add to api, struture params for axios post request
 		// Token and the fields title, author, and url are required> last three are inside story object
@@ -98,6 +103,32 @@ class StoryList {
 		// console.log("newStory :", newStory);
 		// console.log("story list =", storyList);
 		return newStory;
+	}
+
+	/** PAM: doing
+	 * Part 4: Removing Stories
+	 * Allow logged in users to remove a story.
+	 * Once a story has been deleted, remove it from the DOM and let the API know its been deleted.
+	 * allow user to delete only their stories
+	 * add a my stories tab
+	 * add button for user to delete the story when looking at stories in my stories tab
+	 *
+	 * @param {*} currentUser
+	 * @param {*} storyDeleteId
+	 */
+
+	async removeStory(currentUser, storyDeleteId) {
+		console.log("removing story");
+		let requestBody = {
+			token: currentUser.loginToken,
+		};
+		const response = await axios({
+			url: `${BASE_URL}/stories/${storyDeleteId}`,
+			method: "DELETE",
+			data: requestBody,
+		});
+		console.log("Response: ", response);
+		console.log("Response Data: ", response.data);
 	}
 }
 
@@ -220,7 +251,13 @@ class User {
 	// Subpart 3A: Data/API Changes: write the data-logic and API-call part first,
 	// understand how to favorite a story using api PAM: DONE
 	// api request add favorite requiers to be a post request with token in body and the url to post to is the base url plus /users/username/favorites/storyId
-	// build logic to save and unsave favorites to users favorites list pam: Doing....
+	// build logic to save and unsave favorites to users favorites list pam: DONE
+	// Subpart 3B: the UI
+	// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes. PAM: DONE
+	// add button/ check to favorite story with event listener to add / mark story a favorite PAM: DONE
+	// using a chackbox and checking if its checked or not. PAM: DONE
+	// Allow logged in users to see a separate list of favorited stories. PAM: DONE
+	// add favorites nav tab PAM: DONE
 	async markStoryAsAFavoriteOfUser(storyId) {
 		let username = currentUser.username;
 		let token = currentUser.loginToken;
@@ -273,11 +310,4 @@ class User {
 		}
 		return response.data;
 	}
-
-	// Subpart 3B: the UI
-	// Allow logged in users to “favorite” and “un-favorite” a story. These stories should remain favorited when the page refreshes.
-	// add button/ check to favorite story with event listener to add / mark story a favorite
-	// using a chackbox and checking if its checked or not. 'input[type="checkbox"]'
-	// Allow logged in users to see a separate list of favorited stories.
-	// add favorites nav tab
 }
