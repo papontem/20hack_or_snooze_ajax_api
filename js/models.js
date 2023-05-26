@@ -117,18 +117,30 @@ class StoryList {
 	 * @param {*} storyDeleteId
 	 */
 
-	async removeAPIStory(currentUser, storyDeleteId) {
-		console.log("removing story");
+	async removeAPIandUserOwnStory(currentUser, storyDeleteId) {
+		console.log("removing story from api and local storage user own story");
+		// remove story from users ownStories local data array
+		currentUser.ownStories = currentUser.ownStories.filter(function (
+			story,
+			i,
+			a
+		) {
+			// console.log("current story id:", story.storyId);
+			// console.log(i, a);
+			return story.storyId != storyDeleteId;
+		});
+		// prepare api HTTP resquest data
 		let requestBody = {
 			token: currentUser.loginToken,
 		};
+		// remove story using api
 		const response = await axios({
 			url: `${BASE_URL}/stories/${storyDeleteId}`,
 			method: "DELETE",
 			data: requestBody,
 		});
-		console.log("Response: ", response);
-		console.log("Response Data: ", response.data);
+		// console.log("Response: ", response);
+		// console.log("Response Data: ", response.data);
 		return response.data;
 	}
 }

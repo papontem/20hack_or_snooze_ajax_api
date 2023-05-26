@@ -142,7 +142,7 @@ function toggleFavoriteCheck(event) {
 	}
 }
 
-/** PAM: PART 4 getlistof users own submited stories, generatetheir html and puts them on the page
+/** PAM: PART 4 getlistof users own submited stories, generate their html and puts them on the page
  *
  */
 function putUsersOwnStoriesOnPage() {
@@ -155,7 +155,13 @@ function putUsersOwnStoriesOnPage() {
 		const $story = generateUserOwnStoryMarkup(story); // PAM4: edited a fork of the provided generateStoriesMarkup to have a delete button
 		$userStoriesList.append($story);
 	}
-
+	// i want to have the checkboxes prechecked for stories submited that have been favorited aswell
+	for (let checkbox of $("#user-stories-list input#favoriteStoryCheckbox")) {
+		console.log(checkbox);
+		if (checkForFavorite($(checkbox).parent().attr("id"))) {
+			checkbox.checked = true;
+		}
+	}
 	// add the event listener for toggling favorite on a story
 	$("input#favoriteStoryCheckbox").on("change", toggleFavoriteCheck);
 	//add the event listener for the delete button that on the story html element
@@ -163,8 +169,28 @@ function putUsersOwnStoriesOnPage() {
 	// render the favorites story list
 	$userStoriesList.show();
 }
+function checkForFavorite(id) {
+	let favoriteStoriesIdArray = currentUser.favorites.map(
+		(element) => element.storyId
+	);
+	if (favoriteStoriesIdArray.includes(id)) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
-function removeStory(event) {
-	console.log("removeStory, going kapoof", event);
-	console.log("this", this);
+async function removeStory(event) {
+	console.log("removeStory");
+	// console.log("removeStory, going kapoof", event);
+	console.log("this", $(this).parent().attr("id"));
+	const targetStoryId = $(this).parent().attr("id");
+	// remove story from api and users own stories list
+	let removedResponse = await storyList.removeAPIandUserOwnStory(
+		currentUser,
+		targetStoryId
+	);
+	// console.log("removedResponse:", removedResponse);
+	// remove story from html
+	putUsersOwnStoriesOnPage();
 }
