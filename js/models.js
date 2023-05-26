@@ -120,13 +120,8 @@ class StoryList {
 	async removeAPIandUserOwnStory(currentUser, storyDeleteId) {
 		console.log("removing story from api and local storage user own story");
 		// remove story from users ownStories local data array
-		currentUser.ownStories = currentUser.ownStories.filter(function (
-			story,
-			i,
-			a
-		) {
-			// console.log("current story id:", story.storyId);
-			// console.log(i, a);
+		currentUser.ownStories = currentUser.ownStories.filter(function (story) {
+			console.log("current story id:", story.storyId);
 			return story.storyId != storyDeleteId;
 		});
 		// prepare api HTTP resquest data
@@ -139,8 +134,17 @@ class StoryList {
 			method: "DELETE",
 			data: requestBody,
 		});
+		// remove from favorites if story is also one of favorites
+		currentUser.favorites = currentUser.favorites.filter(
+			(story) => story.storyId != storyDeleteId
+		);
+		// remove from stories list
+		storyList.stories = storyList.stories.filter(
+			(story) => story.storyId != storyDeleteId
+		);
+
 		// console.log("Response: ", response);
-		// console.log("Response Data: ", response.data);
+		console.log("Response Data: ", response.data);
 		return response.data;
 	}
 }

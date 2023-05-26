@@ -191,6 +191,5 @@ async function removeStory(event) {
 		targetStoryId
 	);
 	// console.log("removedResponse:", removedResponse);
-	// remove story from html
 	putUsersOwnStoriesOnPage();
 }
