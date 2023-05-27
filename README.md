@@ -12,30 +12,11 @@ This is a public repo of the Hack or Snooze Project that i was tasked with compl
 
 ## ToDo:
 
-    **following is a list of ideas i still need to implement in the future.**
-    |                       Idea                                                         |   done?  |
-    |                     --------                                                       | -------- |
-    | Add Custom buttons for the navigational links, a star for the favoring             |     x    |
-    | of stories, and a dumpster for the deleting of self submitted stories              |          |
-    |                     --------                                                       | -------- |
-    | Add some error handling for when a username has                                    |     x    |
-    | already been taken or if credentials are incorrect!                                |          |
-    |                     --------                                                       | -------- |
-    | Allow users to edit stories they have created.                                     |     x    |
-    |                                                                                    |          |
-    |                     --------                                                       | -------- |
-    | Add a section for a “user profile” where a user                                    |     x    |
-    | can change their name and password in their profile.                               |          |
-    |                     --------                                                       | -------- |
-    | Style the application so that it is presentable on mobile devices.                 |     x    |
-    |                                                                                    |          |
-    |                     --------                                                       | -------- |
-    | Add infinite scroll! When a user scrolls to the bottom of the page,                |     x    |
-    | load more stories.                                                                 |          |
-    |                     --------                                                       | -------- |
-    | Add infinite scroll! When a user scrolls to the bottom of the page,                |     x    |
-    | load more stories.                                                                 |          |
-    |                     --------                                                       | -------- |
-    | Coming Soon .....                                                                  |          |
-    |                                                                                    |          |
-    |                     --------                                                       | -------- |
+    **following is a list of ideas id like to implement in the future.**
+
+- [ ] Add some error handling for when a username has already been taken or if credentials are incorrect!
+- [ ] Allow users to edit stories they have created.
+- [ ] Add a section for a “user profile” where a user can change their name and password in their profile.
+- [ ] Style the application so that it is presentable on mobile devices.
+- [ ] Add infinite scroll! When a user scrolls to the bottom of the page, load more stories.
+- [ ] Come up with some other features you can build using what our Hack or Snooze API makes available to you!
