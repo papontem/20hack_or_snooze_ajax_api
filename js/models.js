@@ -82,16 +82,16 @@ class StoryList {
 		// console.log("currentUser:", currentUser);
 		// add to api, struture params for axios post request
 		// Token and the fields title, author, and url are required> last three are inside story object
-		let requestBody = {
+		let payload = {
 			token: currentUser.loginToken,
 			story: inputStory,
 		};
-		// console.log("body for post request:", requestBody);
+		// console.log("body for post request:", payload);
 		// pam: make axios api post request
 		const response = await axios({
 			url: `${BASE_URL}/stories`,
 			method: "POST",
-			data: requestBody,
+			data: payload,
 		});
 		// console.log("Response: ", response);
 		// console.log("Response Data: ", response.data);
@@ -125,14 +125,14 @@ class StoryList {
 			return story.storyId != storyDeleteId;
 		});
 		// prepare api HTTP resquest data
-		let requestBody = {
+		let payload = {
 			token: currentUser.loginToken,
 		};
 		// remove story using api
 		const response = await axios({
 			url: `${BASE_URL}/stories/${storyDeleteId}`,
 			method: "DELETE",
-			data: requestBody,
+			data: payload,
 		});
 		// remove from favorites if story is also one of favorites
 		currentUser.favorites = currentUser.favorites.filter(
